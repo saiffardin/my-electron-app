@@ -1,5 +1,5 @@
 const path = require('path');
-const {app, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow} = require('electron');
 
 let mainWindow;
 
@@ -32,15 +32,4 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
-})
-
-// send from renderer process (index.js)
-ipcMain.on('async-event-from-renderer', (e) => {
-    e.sender.send('async-event-from-main', 'param 2 text');
-})
-
-// send from renderer process (index.js)
-ipcMain.on('sync-event-from-renderer', (e) => {
-    // e.sender.send('async-event-from-main', 'param 2 text');
-    e.returnValue = 'sync reply from main';
 })
