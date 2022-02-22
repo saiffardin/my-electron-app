@@ -1,5 +1,5 @@
+const {electron,app, BrowserWindow, Menu} = require('electron');
 const path = require('path');
-const {app, BrowserWindow} = require('electron');
 
 let mainWindow;
 
@@ -33,3 +33,57 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
+
+const mainMenuTemplate = [
+    {
+        label: 'Edit',
+        submenu: [
+            {role: 'undo'},
+            {role: 'redo'},
+            {type: 'separator'},
+            {role: 'cut'},
+            {role: 'copy'},
+            {role: 'paste'},
+            {role: 'pasteandmatchstyle'},
+            {role: 'delete'},
+            {role: 'selectall'}
+        ]
+    },
+
+    {
+        label: 'Demo',
+        submenu: [
+            {
+                label: 'Submenu1',
+                click: function () {
+                    console.log('Clicked sub menu 1');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Submenu2'
+            }
+        ]
+    },
+
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'About Electron',
+                click: function () {
+                    electron.shell.openExternal('http://electron.atom.io');
+                },
+                accelerator: 'CmdOrCtrl + Shift + H'
+            }
+        ]
+    }
+]
+
+// Build menu from template
+const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+
+// insert menu
+Menu.setApplicationMenu(mainMenu)
