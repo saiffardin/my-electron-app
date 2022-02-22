@@ -1,8 +1,13 @@
 const {app, BrowserWindow, ipcRenderer} = require('electron');
+
 const path = require('path');
 
 const asyncBtn = document.getElementById('asyncBtn');
 const syncBtn = document.getElementById('syncBtn');
+
+// opening window within render process
+window.open('https://github.com');
+// window.setAlwaysOnTop("true"); 
 
 
 asyncBtn.addEventListener('click', () => {
