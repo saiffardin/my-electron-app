@@ -38,6 +38,10 @@ app.whenReady().then(() => {
     }
 
     ctxMenu.append(new MenuItem({
+        role: 'reload'
+    }))
+
+    ctxMenu.append(new MenuItem({
         label: 'Hello',
         click() {
             console.log('context menu clicked');
