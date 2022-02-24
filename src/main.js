@@ -1,4 +1,4 @@
-const {electron,app, BrowserWindow, Menu} = require('electron');
+const {electron, app, BrowserWindow, Menu, MenuItem} = require('electron');
 const path = require('path');
 
 let mainWindow;
@@ -27,6 +27,32 @@ app.whenReady().then(() => {
         // On macOS it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+
+
+    // Context Menu
+    const ctxMenu = new Menu();
+
+    const ctxMenuTemplate = {
+
+    }
+
+    ctxMenu.append(new MenuItem({
+        label: 'Hello',
+        click() {
+            console.log('context menu clicked');
+        }
+    }))
+
+    ctxMenu.append(new MenuItem({
+        role: 'selectAll'
+    }))
+
+
+    // now we've to attach the context menu
+    // to the right click event of the window
+    mainWindow.webContents.on('context-menu', (e, params) => {
+        ctxMenu.popup(mainWindow, params.x, params.y);
     })
 })
 
@@ -82,8 +108,8 @@ const mainMenuTemplate = [
     }
 ]
 
-// Build menu from template
+// Build application menu from template
 const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 
-// insert menu
+// insert application menu
 Menu.setApplicationMenu(mainMenu)
