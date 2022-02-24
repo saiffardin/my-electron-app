@@ -1,12 +1,17 @@
 const {electron, app, BrowserWindow, Menu, MenuItem} = require('electron');
 const path = require('path');
+const {getWinSettings, saveBounds} = require('./settings');
 
 let mainWindow;
 
+let bounds = getWinSettings();
+console.log('bounds:', bounds);
+console.log()
+
 const createWindow = () => {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: bounds[0],
+        height: bounds[1],
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -29,13 +34,10 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
+    mainWindow.on('resized', () => saveBounds(mainWindow.getSize()))
 
     // Context Menu
     const ctxMenu = new Menu();
-
-    const ctxMenuTemplate = {
-
-    }
 
     ctxMenu.append(new MenuItem({
         role: 'reload'

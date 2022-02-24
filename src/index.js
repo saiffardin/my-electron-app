@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-btnCreate = document.getElementById('btnCreate');
-btnRead = document.getElementById('btnRead');
-btnDelete = document.getElementById('btnDelete');
-fileName = document.getElementById('fileName');
-fileContents = document.getElementById('fileContents');
+
+let btnRead = document.getElementById('btnRead');
+let btnCreate = document.getElementById('btnCreate');
+let btnDelete = document.getElementById('btnDelete');
+let fileName = document.getElementById('fileName');
+let fileContents = document.getElementById('fileContents');
 
 let pathName = path.join(__dirname, 'Files');
 
@@ -38,10 +39,9 @@ btnRead.addEventListener('click', function () {
 
 
 btnDelete.addEventListener('click', function () {
-    console.log('btnDelete')
 
     let file = path.join(pathName, fileName.value)
-    
+
     fs.unlink(file, function (err) {
         if (err) {
             return console.log(err);
